@@ -36,6 +36,13 @@ jobs:
         with:
           go-version: 1.19.x
 
+      - name: Install DotNet SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            3.1.301
+            6.0.x
+
       - run: |
           git config --global url."https://praneetloke:${GH_REPO_PAT}@github.com/".insteadOf "https://github.com/"
         env:
