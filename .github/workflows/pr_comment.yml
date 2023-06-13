@@ -57,7 +57,7 @@ jobs:
             });
 
       - name: Regen schema and SDKs
-        if: ${{ steps.get-pr.outputs.result && steps.get-pr.outputs.result.head.ref }}
+        if: ${{ steps.get-pr.outputs.result }}
         env:
           REF: ${{ steps.get-pr.outputs.result.head.ref }}
         run: |
