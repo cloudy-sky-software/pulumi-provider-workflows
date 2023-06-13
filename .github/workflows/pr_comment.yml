@@ -31,6 +31,11 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
       - name: Install Go
         uses: actions/setup-go@v4
         with:
@@ -42,6 +47,11 @@ jobs:
           dotnet-version: |
             3.1.301
             6.0.x
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
 
       - run: |
           git config --global url."https://praneetloke:${GH_REPO_PAT}@github.com/".insteadOf "https://github.com/"
