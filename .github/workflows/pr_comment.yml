@@ -48,8 +48,8 @@ jobs:
         with:
           script: |
             return github.rest.pulls.get({
-              owner: ${{ github.repository_owner }}
-              repo: ${{ github.event.repository.name }},
+              owner: context.repo.owner
+              repo: context.repo.repo,
               pull_number: ${{ inputs.pr-number }}
             });
 
