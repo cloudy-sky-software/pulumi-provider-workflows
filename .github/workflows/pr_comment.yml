@@ -47,11 +47,11 @@ jobs:
         id: get-pr
         with:
           script: |
-            github.rest.pulls.get({
+            return github.rest.pulls.get({
               owner: ${{ github.repository_owner }}
               repo: ${{ github.event.repository.name }},
               pull_number: ${{ inputs.pr-number }}
-            })
+            });
 
       - name: Regen schema and SDKs
         if: ${{ steps.get-pr.outputs.result && steps.get-pr.outputs.result.head.ref }}
