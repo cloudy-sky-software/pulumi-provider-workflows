@@ -58,6 +58,14 @@ jobs:
         env:
           GH_REPO_PAT: ${{ secrets.GH_REPO_PAT }}
 
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@v1.10.0
+        with:
+          repo: pulumi/pulumictl
+          tag: "latest"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # This step's outputs.result will be a PR object.
       # https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#get-a-pull-request
       - uses: actions/github-script@v6
