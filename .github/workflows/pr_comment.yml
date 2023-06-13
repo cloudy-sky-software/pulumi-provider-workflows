@@ -65,6 +65,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
 
           # Switch to the PR branch.
+          git fetch
           git checkout ${REF}
 
           make gen generate_schema build
