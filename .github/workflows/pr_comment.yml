@@ -27,6 +27,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/github-script@v6
+        env:
+          PR_NUMBER: ${{ inputs.pr-number }}
+        with:
+          script: |
+            const { PR_NUMBER } = process.env;
+            github.rest.issues.createComment({
+              issue_number: PR_NUMBER,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `👋 A new [workflow run](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${{github.run_id}}) was started to regenerate the schema and SDKs.`
+            });
+
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
