@@ -51,7 +51,7 @@ jobs:
           script: |
             const { PR_NUMBER } = process.env;
             return github.rest.pulls.get({
-              owner: context.repo.owner
+              owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: PR_NUMBER
             });
