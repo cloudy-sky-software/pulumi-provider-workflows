@@ -3,6 +3,9 @@
 on:
   workflow_call:
     inputs:
+      pr-number:
+        required: true
+        type: number
       comment-action:
         required: true
         type: string
@@ -12,18 +15,15 @@ on:
       state:
         required: true
         type: string
-      pull-request-json:
-        required: true
-        type: string
 
 env:
   GOPRIVATE: "github.com/cloudy-sky-software/*"
 
 jobs:
-  pr_commented:
+  regen_all:
     # This job only runs for pull request comments.
-    name: PR comment
-    if: ${{ inputs.comment-action == 'created' && inputs.comment-body == '/regen all' && fromJson(inputs.pull-request-json) && inputs.state == 'open' && !fromJson(inputs.pull-request-json).merged_at }}
+    name: On-demand regen schema and SDKs in a PR
+    if: ${{ inputs.comment-action == 'created' && inputs.comment-body == '/regen all' && inputs.state == 'open' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -41,10 +41,28 @@ jobs:
         env:
           GH_REPO_PAT: ${{ secrets.GH_REPO_PAT }}
 
+      # This step's outputs.result will be a PR object.
+      # https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#get-a-pull-request
+      - uses: actions/github-script@v6
+        id: get-pr
+        with:
+          script: |
+            github.rest.pulls.get({
+              owner: ${{ github.event.repository.owner }}
+              repo: ${{ github.event.repository.name }},
+              pull_number: ${{ inputs.pr-number }}
+            })
+
       - name: Regen schema and SDKs
+        if: ${{ steps.get-pr.outputs.result && steps.get-pr.outputs.result.head.ref }}
+        env:
+          REF: ${{ steps.get-pr.outputs.result.head.ref }}
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+
+          # Switch to the PR branch.
+          git checkout ${REF}
 
           make gen generate_schema build
 
@@ -53,4 +71,4 @@ jobs:
 
           git commit -am "Regen schema and SDKs"
 
-          git push origin ${GITHUB_REF_NAME}
+          git push origin ${REF}
