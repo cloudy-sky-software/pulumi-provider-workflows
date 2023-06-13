@@ -57,9 +57,9 @@ jobs:
             });
 
       - name: Regen schema and SDKs
-        if: ${{ steps.get-pr.outputs.result }}
+        if: ${{ steps.get-pr.outputs.result && steps.get-pr.outputs.result.data }}
         env:
-          REF: ${{ steps.get-pr.outputs.result.head.ref }}
+          REF: ${{ steps.get-pr.outputs.result.data.head.ref }}
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
