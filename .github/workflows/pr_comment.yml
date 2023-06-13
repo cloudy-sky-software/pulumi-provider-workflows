@@ -45,12 +45,15 @@ jobs:
       # https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#get-a-pull-request
       - uses: actions/github-script@v6
         id: get-pr
+        env:
+          PR_NUMBER: ${{ inputs.pr-number }}
         with:
           script: |
+            const { PR_NUMBER } = process.env;
             return github.rest.pulls.get({
               owner: context.repo.owner
               repo: context.repo.repo,
-              pull_number: ${{ inputs.pr-number }}
+              pull_number: PR_NUMBER
             });
 
       - name: Regen schema and SDKs
