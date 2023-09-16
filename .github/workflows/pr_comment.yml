@@ -18,6 +18,9 @@ on:
 
 env:
   GOPRIVATE: "github.com/cloudy-sky-software/*"
+  GO_VERSION: "1.21.X"
+  NODE_VERSION: "18.X"
+  PYTHON_VERSION: "3.9"
 
 jobs:
   regen_all:
@@ -47,12 +50,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.19.x
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Install DotNet SDK
         uses: actions/setup-dotnet@v3
@@ -64,7 +67,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - run: |
           git config --global url."https://praneetloke:${GH_REPO_PAT}@github.com/".insteadOf "https://github.com/"
