@@ -19,8 +19,8 @@ on:
 env:
   GOPRIVATE: "github.com/cloudy-sky-software/*"
   GO_VERSION: "1.21.X"
-  NODE_VERSION: "18.X"
-  PYTHON_VERSION: "3.9"
+  NODE_VERSION: "20.X"
+  PYTHON_VERSION: "3.11"
 
 jobs:
   regen_all:
