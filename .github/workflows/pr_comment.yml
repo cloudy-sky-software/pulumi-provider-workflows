@@ -98,19 +98,32 @@ jobs:
 
       - name: Regen schema and SDKs
         if: ${{ steps.get-pr.outputs.result && fromJson(steps.get-pr.outputs.result).data }}
+        env:
+          REF: ${{ fromJson(steps.get-pr.outputs.result).data.head.ref }}
         run: |
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
 
+          # Switch to the PR branch.
+          git fetch --prune --unshallow --tags
+          git checkout ${REF}
+
           make ensure gen generate_schema build
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v7
         if: ${{ steps.get-pr.outputs.result && fromJson(steps.get-pr.outputs.result).data }}
         with:
           add-paths: |
             provider/cmd/pulumi-resource-*
             sdk/*
-          branch: ${{ fromJson(steps.get-pr.outputs.result).data.head.ref }}
+          branch: ${{ fromJson(steps.get-pr.outputs.result).data.head.ref }}-regen
           commit-message: "Regen schema and SDKs"
+          title: Regen schema and SDKs for PR ${{ inputs.pr-number }}
           token: ${{ secrets.GH_PAT }}
+
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --merge --auto "${{ steps.cpr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
