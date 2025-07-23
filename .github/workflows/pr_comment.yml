@@ -17,7 +17,6 @@ on:
         type: string
 
 env:
-  GOPRIVATE: "github.com/cloudy-sky-software/*"
   DOTNET_VERSION: "6.0.x"
   GO_VERSION: "1.24.x"
   NODE_VERSION: "22.x"
@@ -109,8 +108,7 @@ jobs:
           make ensure gen generate_schema build
 
           echo "Checking if worktree has changes..."
-          git update-index -q --refresh
-          git diff-files --quiet
+          git status
 
       - name: Create Pull Request
         id: cpr
