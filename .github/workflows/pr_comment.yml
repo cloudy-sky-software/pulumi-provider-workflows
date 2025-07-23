@@ -108,6 +108,10 @@ jobs:
 
           make ensure gen generate_schema build
 
+          echo "Checking if worktree has changes..."
+          git update-index -q --refresh
+          git diff-files --quiet
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
