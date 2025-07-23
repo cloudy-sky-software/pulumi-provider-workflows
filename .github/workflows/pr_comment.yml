@@ -117,7 +117,7 @@ jobs:
         with:
           add-paths: |
             provider/cmd/pulumi-resource-*
-            sdk/*
+            sdk/**
           branch: ${{ fromJson(steps.get-pr.outputs.result).data.head.ref }}-regen
           commit-message: "Regen schema and SDKs"
           title: Regen schema and SDKs for PR ${{ inputs.pr-number }}
