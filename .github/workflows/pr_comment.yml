@@ -65,10 +65,10 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - run: |
-          git config --global url."https://praneetloke:${GH_REPO_PAT}@github.com/".insteadOf "https://github.com/"
-        env:
-          GH_REPO_PAT: ${{ secrets.GH_REPO_PAT }}
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@v6
+        with:
+          pulumi-version: latest
 
       - name: Install pulumictl
         uses: jaxxstorm/action-install-gh-release@v2.1.0
