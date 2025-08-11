@@ -43,7 +43,7 @@ jobs:
               body: `👋 A new [workflow run](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${{github.run_id}}) was started to regenerate the schema and SDKs.`
             });
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Node
         uses: actions/setup-node@v4
