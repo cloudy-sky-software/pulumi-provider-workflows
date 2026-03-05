@@ -17,10 +17,10 @@ on:
         type: string
 
 env:
-  DOTNET_VERSION: "6.0.x"
-  GO_VERSION: "1.24.x"
-  NODE_VERSION: "22.x"
-  PYTHON_VERSION: "3.12"
+  DOTNET_VERSION: "8.0.x"
+  GO_VERSION: "1.26.x"
+  NODE_VERSION: "24.x"
+  PYTHON_VERSION: "3.13"
 
 jobs:
   regen_all:
