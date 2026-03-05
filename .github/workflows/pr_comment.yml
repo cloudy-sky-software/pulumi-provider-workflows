@@ -26,7 +26,7 @@ jobs:
   regen_all:
     # This job only runs for pull request comments.
     name: On-demand regen schema and SDKs in a PR
-    if: ${{ inputs.comment-action == 'created' && inputs.comment-body == '/regen all' && inputs.state == 'open' }}
+    if: ${{ github.actor == 'praneetloke' && inputs.comment-action == 'created' && inputs.comment-body == '/regen all' && inputs.state == 'open' }}
     runs-on: ubuntu-latest
 
     steps:
