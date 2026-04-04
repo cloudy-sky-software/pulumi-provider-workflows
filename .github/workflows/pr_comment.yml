@@ -66,12 +66,12 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install Pulumi CLI
-        uses: pulumi/actions@v6
+        uses: pulumi/actions@85a185baea80a1ab120237e362612233003f2e29
         with:
           pulumi-version: latest
 
       - name: Install pulumictl
-        uses: jaxxstorm/action-install-gh-release@v2.1.0
+        uses: jaxxstorm/action-install-gh-release@25e24d2d23ae098373794ef1d6faecb48ee52da8
         with:
           repo: pulumi/pulumictl
           tag: "latest"
