@@ -1,5 +1,14 @@
 # This workflow is meant to be called by workflows in other repositories.
 # That's why the event is `workflow_call` instead of `issue_comment` here.
+#
+# Supported PR slash commands:
+# - `/rebase all`
+# 
+# Requirements:
+# - A repo-level secret called `GH_PAT` containing a
+# classic (`repo` scope) or fine-grained (recommended; must have read/write access to PRs)
+# GH personal access token.
+
 on:
   workflow_call:
     inputs:
